@@ -161,10 +161,10 @@ footer {
   font-weight: 600;
 }
 
-/* Bulleted list, compact and clean */
+/* Compact participants list without bullets */
 .activity-card .participants-list {
-  list-style: disc;
-  padding-left: 20px;
+  list-style: none;
+  padding-left: 0;
   margin: 0;
 }
 
@@ -175,6 +175,21 @@ footer {
   margin-bottom: 8px;
   color: #444;
   font-size: 14px;
+}
+
+/* Delete icon/button next to each participant */
+.activity-card .participant-delete {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: #c62828;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 6px;
+}
+
+.activity-card .participant-delete:hover {
+  color: #b71c1c;
 }
 
 /* Small circular avatar/initials for each participant */
