@@ -39,6 +39,31 @@
         </form>
         <div id="message" class="hidden"></div>
       </section>
+
+      <div class="activity-card" data-participants='["Jane Smith","Alex Roe"]'>
+        <!-- ...existing card content (title, description, etc.)... -->
+        <p class="availability">Availability: 5 spots left</p>
+
+        <!-- participants: place this inside each activity-card (directly under availability) -->
+        <div class="participants empty">
+          <h5>Participants</h5>
+          <ul class="participants-list">
+            <li>No participants yet</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Example of an activity with no participants -->
+      <div class="activity-card">
+        <!-- ...existing card content... -->
+
+        <div class="participants empty">
+          <h5>Participants</h5>
+          <ul class="participants-list">
+            <li>No participants yet</li>
+          </ul>
+        </div>
+      </div>
     </main>
 
     <footer>

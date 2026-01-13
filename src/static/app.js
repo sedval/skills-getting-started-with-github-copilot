@@ -83,4 +83,88 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize app
   fetchActivities();
+
+  document.querySelectorAll('.activity-card').forEach(card => {
+    ensureParticipantsContainer(card);
+    renderParticipants(card, readParticipantsFromCard(card));
+  });
+
+  document.addEventListener('submit', (e) => {
+    const form = e.target.closest('.signup-form') || e.target.closest('form.signup-form');
+    if (!form) return;
+    e.preventDefault();
+    const card = form.closest('.activity-card');
+    if (!card) return;
+    const nameInput = form.querySelector('input[name="name"]') || form.querySelector('input[type="text"]');
+    const name = (nameInput && nameInput.value.trim()) || '';
+    if (!name) return;
+
+    const participants = readParticipantsFromCard(card);
+    participants.push(name);
+    card.setAttribute('data-participants', JSON.stringify(participants));
+    renderParticipants(card, participants);
+    if (nameInput) nameInput.value = '';
+  });
+
+  function ensureParticipantsContainer(card) {
+    let container = card.querySelector('.participants');
+    if (!container) {
+      container = document.createElement('div');
+      container.className = 'participants empty';
+      container.innerHTML = '<h5>Participants</h5><ul class="participants-list"><li>No participants yet</li></ul>';
+      const avail = card.querySelector('.availability');
+      if (avail && avail.parentNode) avail.parentNode.insertBefore(container, avail.nextSibling);
+      else card.appendChild(container);
+    } else if (!container.querySelector('.participants-list')) {
+      container.innerHTML = '<h5>Participants</h5><ul class="participants-list"><li>No participants yet</li></ul>';
+    }
+  }
+
+  function readParticipantsFromCard(card) {
+    const attr = card.getAttribute('data-participants');
+    if (attr) {
+      try { return JSON.parse(attr) || []; } catch { return attr.split(',').map(s=>s.trim()).filter(Boolean); }
+    }
+    const script = card.querySelector('script[type="application/json"].participants-data');
+    if (script) {
+      try { return JSON.parse(script.textContent || script.innerText) || []; } catch {}
+    }
+    const names = card.querySelectorAll('.participants-list .participant-name');
+    if (names && names.length) return Array.from(names).map(n => n.textContent.trim()).filter(Boolean);
+    return [];
+  }
+
+  function renderParticipants(card, participants) {
+    ensureParticipantsContainer(card);
+    const container = card.querySelector('.participants');
+    const list = container.querySelector('.participants-list');
+    list.innerHTML = '';
+
+    if (Array.isArray(participants) && participants.length) {
+      container.classList.remove('empty');
+      participants.forEach(p => {
+        const name = typeof p === 'string' ? p : (p && (p.name || `${p.first||''} ${p.last||''}`).trim()) || '';
+        const li = document.createElement('li');
+
+        const avatar = document.createElement('span');
+        avatar.className = 'participant-avatar';
+        avatar.textContent = initials(name);
+
+        const spanName = document.createElement('span');
+        spanName.className = 'participant-name';
+        spanName.textContent = name;
+
+        li.appendChild(avatar);
+        li.appendChild(spanName);
+        list.appendChild(li);
+      });
+    } else {
+      container.classList.add('empty');
+      list.innerHTML = '<li>No participants yet</li>';
+    }
+  }
+
+  function initials(name) {
+    return (String(name || '').split(/\s+/).map(n => n[0] || '').slice(0,2).join('') || '?').toUpperCase();
+  }
 });
