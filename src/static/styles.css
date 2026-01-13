@@ -142,3 +142,64 @@ footer {
   padding: 20px;
   color: #666;
 }
+
+/* Participants section inside activity cards */
+.activity-card .participants {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed #eee;
+}
+
+.activity-card .participants h5 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #1a237e;
+  font-weight: 600;
+}
+
+/* Bulleted list, compact and clean */
+.activity-card .participants-list {
+  list-style: disc;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.activity-card .participants-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  color: #444;
+  font-size: 14px;
+}
+
+/* Small circular avatar/initials for each participant */
+.activity-card .participant-avatar {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #e8f0ff, #cfe0ff);
+  border: 1px solid #c0d3ff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a237e;
+  font-weight: 700;
+  font-size: 12px;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset;
+}
+
+/* Name text next to avatar */
+.activity-card .participant-name {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Placeholder when no participants */
+.activity-card .participants.empty .participants-list {
+  list-style: none;
+  padding-left: 0;
+  color: #777;
+  font-style: italic;
+}
